@@ -12,6 +12,8 @@ var peer = new Peer(undefined, {
     port: '443'
 });
 
+const user = prompt("Enter your name");
+
 let myVideoStream
 
 navigator.mediaDevices.getUserMedia({
@@ -44,8 +46,10 @@ navigator.mediaDevices.getUserMedia({
         }
     })
     
-    socket.on('createMessage' , message => {
-        $('.messages').append(`<li class="message"><b>user</b><br/>${message}</li>`);
+    socket.on('createMessage' , (message,userName) => {
+        $('.messages').append(`<li class="message"><b>${
+            userName === user ? "me" : userName
+          }</b><br/>${message}</li>`);
         scrollToBottom()
     })
 })
@@ -53,7 +57,7 @@ navigator.mediaDevices.getUserMedia({
 
 
 peer.on('open' , id => {
-    socket.emit('join-room',ROOM_ID, id);
+    socket.emit('join-room',ROOM_ID, id, user);
 })
 
 
