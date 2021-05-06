@@ -132,3 +132,10 @@ const setPlayVideo = () => {
 
     document.querySelector('.main__video_button').innerHTML = html;
 }
+
+const invite = () => {
+    prompt(
+      "Copy this link and send it to person you want to meet with",
+      window.location.href
+    );
+}
